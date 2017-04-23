@@ -1,21 +1,67 @@
 // CSS
 require('./main.scss')
+const $ = require('jquery')
 
-// Comment out any of the below examples to get a feel for what
-// is setup in this environment out of the box. We've commented out the Javascript
-// example by default.
+$( document ).ready(function() {
 
-// Here's an example of starting with plain-old Javscript
-require('./examples/javascript/entry.js')
+  $('#search').on('click', function(e) {
+    e.preventDefault();
+    loadMap();
+  })
+  
+});
 
-// Here's an example of starting with plain-old CoffeeScript
-// require('./examples/coffeescript/entry.coffee')
+function validateSearch(business, zipcode) {
+	if(business.length == 0) {
+		return false;
+	} else if(zipcode.length == 0) {
+		return false;
+	} else {
+		return true;
+	}
+}
 
-// Here's an example of starting with CoffeeScript+React
-// require('./examples/coffeescript_react/entry.cjsx')
+function loadMap() {
+	if(validateSearch($('#searchedBiz').val(), $('#zipcode').val())) {
 
-// Here's an example of starting with React
-// require('./examples/react/entry.jsx')
+    const searchParams = $('#searchedBiz').val() + ' ' + $('#zipcode').val();
+    
+    const mapOptions = {
+        zoom: 14,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
 
-// Here's an example of starting with Angular
-// require('./examples/angular/entry.js')
+    const map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    const service = new google.maps.places.PlacesService(map);
+
+    service.textSearch({
+        query: searchParams
+    }, function(results) {
+    		console.log(results)
+        const lat = results[0].geometry.location.lat();
+        const long = results[0].geometry.location.lng();
+        const center = new google.maps.LatLng(lat, long);
+        map.setCenter(center);
+
+
+        for (var i = 0; i < results.length; i++) {
+            const marker = new google.maps.Marker({
+                position: new google.maps.LatLng(results[i].geometry.location.lat(), results[i].geometry.location.lng()),
+                map: map,
+                optimized: false,
+                });
+            const infowindow = new google.maps.InfoWindow({
+  						content: results[i].name + ' ' + results[i].formatted_address,
+						});
+
+						marker.addListener('click', function() {
+							infowindow.open(map, marker);
+						});
+        	}
+       	}
+    	)
+		}
+	}
+		
+
