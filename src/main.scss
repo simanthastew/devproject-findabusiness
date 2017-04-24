@@ -21,6 +21,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 #photoSet {
 	height: 200px;
+	width: 100%;
 }
 
 body {
@@ -45,4 +46,13 @@ ul {
 
 #businessSection {
 	vertical-align: top;
+}
+
+#img {
+	padding: 15px;
+}
+
+#photoSet ul {
+	list-style: none;
+	display: inline-block;
 }

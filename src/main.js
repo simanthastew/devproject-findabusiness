@@ -70,7 +70,7 @@ function appendInfo(business) {
 
 	if(business.photos.length > 0) {
 		for(var i = 0; i < 5; i++) {
-			const photo = business.photos[i].getUrl({'maxWidth': 100, 'maxHeight': 100});
+			const photo = business.photos[i].getUrl({'maxWidth': 200, 'maxHeight': 200});
 			const img = $('<img>');
 			img.attr('src', photo);
 			img.appendTo($('#photoSet'));
@@ -88,6 +88,7 @@ function tagImage(url) {
 	app.models.predict(Clarifai.GENERAL_MODEL, url).then(
 	  function(response) {
 	  	const list = $('#photoSet').append("<ul></ul>");
+	  	list.css('display', 'inline-block')
 	  	for(var i=0; i < 3; i++) {
 	  		const tag = response.outputs[0].data.concepts[i].name;
 	  		list.append('<li>' + tag + '</li>')
