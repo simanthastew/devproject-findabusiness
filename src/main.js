@@ -3,7 +3,7 @@ require('./main.scss')
 const $ = require('jquery')
 
 $( document ).ready(function() {
-
+	console.log('b')
   $('#search').on('click', function(e) {
     e.preventDefault();
     loadMap();
@@ -49,31 +49,11 @@ function loadMap() {
         service.getDetails({
       		placeId: results[0].place_id
     		}, function(results) {
+    			console.log(results)
       		appendInfo(results)
     		});
 
     });
-
-  //       for (var i = 0; i < results.length; i++) {
-  //           const marker = new google.maps.Marker({
-  //               position: new google.maps.LatLng(results[i].geometry.location.lat(), results[i].geometry.location.lng()),
-  //               map: map,
-  //               optimized: false,
-  //               });
-
-  //           const infowindow = new google.maps.InfoWindow({
-  // 						content: results[i].name + ' ' + results[i].formatted_address,
-		// 				});
-
-		// 				marker.addListener('click', function() {
-		// 					infowindow.open(map, marker);
-		// 				});
-  //       	}
-  //      	}
-  //   	) 
-		// } else {
-  //   	alert("Please enter a valid business name and zipcode")
-  //   }
 	} else {
 		alert("Please enter a valid business name and zipcode")
 	}
@@ -85,8 +65,14 @@ function appendInfo(business) {
 	$('#address').text(business.formatted_address);
 	$('#website').text(business.name);
 	$('#type').text(business.types[0]);
-	for(var i = 0; i < 5; i++) {
-		$('#photoSet').append(business.photos[i]);
+
+	if(business.photos.length > 0) {
+		for(var i = 0; i < 5; i++) {
+			const photo = business.photos[i].getUrl({'maxWidth': 100, 'maxHeight': 100});
+			const img = $('<img>');
+			img.attr('src', photo);
+			img.appendTo($('#photoSet'))
+		}
 	}
 }
 		
