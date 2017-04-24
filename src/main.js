@@ -61,6 +61,8 @@ function loadMap() {
 }
 
 function appendInfo(business) {
+	$('#photoSet').empty();
+	
 	$('#name').text(business.name);
 	$('#phone').text('Phone: '+ business.formatted_phone_number);
 	$('#address').text('Address: ' + business.formatted_address);
