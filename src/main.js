@@ -5,7 +5,6 @@ const Clarifai = require('clarifai');
 
 
 $( document ).ready(function() {
-	console.log('b')
   $('#search').on('click', function(e) {
     e.preventDefault();
     loadMap();
@@ -70,10 +69,10 @@ function appendInfo(business) {
 	if(business.photos.length > 0) {
 		for(var i = 0; i < 5; i++) {
 			const photo = business.photos[i].getUrl({'maxWidth': 100, 'maxHeight': 100});
-			tagImage(photo)
 			const img = $('<img>');
 			img.attr('src', photo);
-			img.appendTo($('#photoSet'))
+			img.appendTo($('#photoSet'));
+			tagImage(photo);
 		}
 	}
 }
@@ -85,13 +84,16 @@ function tagImage(url) {
 	);
 
 	app.models.predict(Clarifai.GENERAL_MODEL, url).then(
-  function(response) {
-    console.log(response);
-  },
-  function(err) {
-    console.error(err);
-  }
-)
+	  function(response) {
+	  	const tags = [];
+	  	for(var i=0; i < 3; i++) {
+	  		const tag = response.outputs[0].data.concepts[i].name;
+	  		$('#photoSet').append(tag)
+	  	}
+	  }, function(err) {
+	    console.error(err);
+	  }
+	)
 }
 		
 
