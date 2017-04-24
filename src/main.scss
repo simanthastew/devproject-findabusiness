@@ -21,4 +21,33 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 #photoSet {
 	height: 200px;
+	width: 100%;
+}
+
+body {
+	width: 100%;
+	padding: 15px;
+	background-color: #ACC4CC;
+}
+
+#error {
+	color: red;
+}
+
+ul {
+	list-style: none;
+}
+
+.half {
+	width: 45%;
+	display: inline-block;
+	padding: 10px;
+}
+
+#businessSection {
+	vertical-align: top;
+}
+
+#img {
+	padding: 15px;
 }

@@ -5,7 +5,6 @@ const Clarifai = require('clarifai');
 
 
 $( document ).ready(function() {
-	console.log('b')
   $('#search').on('click', function(e) {
     e.preventDefault();
     loadMap();
@@ -29,9 +28,10 @@ function loadMap() {
   const searchParams = business + ' ' + zip;
 
 	if(validateSearch(business, zip)) {
+		$('#error').text('');
 		$('#searchForm :input').val('');;
     const mapOptions = {
-        zoom: 14,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -56,24 +56,27 @@ function loadMap() {
 
     });
 	} else {
-		alert("Please enter a valid business name and zipcode")
+		$('#error').text('Please enter a valid zipcode and business name.')
 	}
 }
 
 function appendInfo(business) {
+	$('#photoSet').empty();
+
 	$('#name').text(business.name);
-	$('#phone').text(business.formatted_phone_number);
-	$('#address').text(business.formatted_address);
-	$('#website').text(business.name);
-	$('#type').text(business.types[0]);
+	$('#phone').text('Phone: '+ business.formatted_phone_number);
+	$('#address').text('Address: ' + business.formatted_address);
+	$('#website').text('Website: ' + business.website);
+	const type = business.types[0].replace(/_/g, ' '); 
+	$('#type').text('Type: ' + type);
 
 	if(business.photos.length > 0) {
 		for(var i = 0; i < 5; i++) {
-			const photo = business.photos[i].getUrl({'maxWidth': 100, 'maxHeight': 100});
-			tagImage(photo)
+			const photo = business.photos[i].getUrl({'maxWidth': 200, 'maxHeight': 200});
 			const img = $('<img>');
 			img.attr('src', photo);
-			img.appendTo($('#photoSet'))
+			img.appendTo($('#photoSet'));
+			tagImage(photo);
 		}
 	}
 }
@@ -85,13 +88,17 @@ function tagImage(url) {
 	);
 
 	app.models.predict(Clarifai.GENERAL_MODEL, url).then(
-  function(response) {
-    console.log(response);
-  },
-  function(err) {
-    console.error(err);
-  }
-)
+	  function(response) {
+	  	const list = $('#photoSet').append("<ul></ul>");
+	  	for(var i=0; i < 3; i++) {
+	  		const tag = response.outputs[0].data.concepts[i].name;
+	  		list.append('<li>' + tag + '</li>')
+	  	}
+	  }, function(err) {
+	    console.error(err);
+	  }
+	)
 }
+
 		
 
