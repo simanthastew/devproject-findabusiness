@@ -41,26 +41,46 @@ function loadMap() {
     }, function(results) {
         map.setCenter(new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()));
 
-        for (var i = 0; i < results.length; i++) {
-            const marker = new google.maps.Marker({
-                position: new google.maps.LatLng(results[i].geometry.location.lat(), results[i].geometry.location.lng()),
-                map: map,
-                optimized: false,
-                });
+        const marker = new google.maps.Marker({
+        	position: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()),
+        	map: map
+        })
 
-            const infowindow = new google.maps.InfoWindow({
-  						content: results[i].name + ' ' + results[i].formatted_address,
-						});
+        service.getDetails({
+      		placeId: results[0].place_id
+    		}, function(results) {
+      		appendInfo(results[0])
+    		});
 
-						marker.addListener('click', function() {
-							infowindow.open(map, marker);
-						});
+    });
 
+  //       for (var i = 0; i < results.length; i++) {
+  //           const marker = new google.maps.Marker({
+  //               position: new google.maps.LatLng(results[i].geometry.location.lat(), results[i].geometry.location.lng()),
+  //               map: map,
+  //               optimized: false,
+  //               });
 
-        	}
-       	}
-    	)
-		}
+  //           const infowindow = new google.maps.InfoWindow({
+  // 						content: results[i].name + ' ' + results[i].formatted_address,
+		// 				});
+
+		// 				marker.addListener('click', function() {
+		// 					infowindow.open(map, marker);
+		// 				});
+  //       	}
+  //      	}
+  //   	) 
+		// } else {
+  //   	alert("Please enter a valid business name and zipcode")
+  //   }
+	} else {
+		alert("Please enter a valid business name and zipcode")
 	}
+}
+
+function appendInfo(business) {
+	business.
+}
 		
 
