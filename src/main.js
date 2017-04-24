@@ -27,7 +27,7 @@ function loadMap() {
   const searchParams = business + ' ' + zip;
 
 	if(validateSearch(business, zip)) {
-
+		$('#searchForm').clear();
     const mapOptions = {
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -49,7 +49,7 @@ function loadMap() {
         service.getDetails({
       		placeId: results[0].place_id
     		}, function(results) {
-      		appendInfo(results[0])
+      		appendInfo(results)
     		});
 
     });
@@ -80,7 +80,14 @@ function loadMap() {
 }
 
 function appendInfo(business) {
-	business.
+	$('#name').text(business.name);
+	$('#phone').text(business.formatted_phone_number);
+	$('#address').text(business.formatted_address);
+	$('#website').text(business.name);
+	$('#type').text(business.types[0]);
+	for(var i = 0; i < 5; i++) {
+		$('#photoSet').append(business.photos[i]);
+	}
 }
 		
 
