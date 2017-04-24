@@ -27,7 +27,7 @@ function loadMap() {
   const searchParams = business + ' ' + zip;
 
 	if(validateSearch(business, zip)) {
-		$('#searchForm').clear();
+		$('#searchForm :input').val('');;
     const mapOptions = {
         zoom: 14,
         mapTypeId: google.maps.MapTypeId.ROADMAP
