@@ -1,11 +1,17 @@
 const assert = require('assert')
 const chai = require('chai')
 
-validateSearch = (businessName, postalCode) => {
-  return Boolean(businessName && postalCode)
-}
+function validateSearch(business, zipcode) {
+    	if(business.length == 0) {
+    		return false;
+    	} else if(zipcode.length == 0) {
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
 
-// See? You can use Mocha and Chai
+
 
 describe('BusinessSearchService', () => {
   describe('#validateSearch()', () => {

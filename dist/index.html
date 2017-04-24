@@ -9,30 +9,30 @@
       <img class='example-header-logo' src='/assets/images/wombat.svg' />
     </div>
 
-    <form>
+    <form id='searchForm'>
     	Business:<br>
-  		<input type="text" name="business">
+  		<input id='searchedBiz' type='text' name='business'>
   		<br>
   		Zipcode:<br>
-  		<input type="text" name="zipcode">
+  		<input id='zipcode' type='text' name='zipcode'>
   		<br><br>
-  		<button>Search</button>
+  		<button id='search'>Search</button>
     </form>
 
     <div id='map'></div>
 
-    <div id='business'>
-    	<h3></h3>
-    	<ul id='business-info'>
-    		<li></li>
-    		<li></li>
-    		<li></li>
-    		<li></li>
+    <div>
+    	<h3 id='name'></h3>
+    	<ul id='businessInfo'>
+    		<li id='phone'></li>
+    		<li id='address'></li>
+    		<li id='website'></li>
+    		<li id='type'></li>
     	</ul>
-    	<div id='photo-set'></div>
+    	<div id='photoSet'></div>
     </div>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfmjsT-RvKxn7in_6OEkfFdNlFWqoV73s&libraries=places"></script>
-    <script type="text/javascript" src="/js/main.bundle.js"></script>
+    <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBfmjsT-RvKxn7in_6OEkfFdNlFWqoV73s&libraries=places'></script>
+    <script type='text/javascript' src='/js/main.bundle.js'></script>
 </body>
 </html>
