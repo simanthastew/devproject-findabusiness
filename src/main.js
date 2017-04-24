@@ -62,10 +62,11 @@ function loadMap() {
 
 function appendInfo(business) {
 	$('#name').text(business.name);
-	$('#phone').text(business.formatted_phone_number);
-	$('#address').text(business.formatted_address);
-	$('#website').text(business.name);
-	$('#type').text(business.types[0]);
+	$('#phone').text('Phone: '+ business.formatted_phone_number);
+	$('#address').text('Address: ' + business.formatted_address);
+	$('#website').text('Website: ' + business.website);
+	const type = business.types[0].replace(/_/g, ' '); 
+	$('#type').text('Type: ' + type);
 
 	if(business.photos.length > 0) {
 		for(var i = 0; i < 5; i++) {
@@ -86,15 +87,16 @@ function tagImage(url) {
 
 	app.models.predict(Clarifai.GENERAL_MODEL, url).then(
 	  function(response) {
-	  	const tags = [];
+	  	const list = $('#photoSet').append("<ul></ul>");
 	  	for(var i=0; i < 3; i++) {
 	  		const tag = response.outputs[0].data.concepts[i].name;
-	  		$('#photoSet').append(tag)
+	  		list.append('<li>' + tag + '</li>')
 	  	}
 	  }, function(err) {
 	    console.error(err);
 	  }
 	)
 }
+
 		
 
