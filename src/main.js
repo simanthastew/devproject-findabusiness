@@ -62,7 +62,7 @@ function loadMap() {
 
 function appendInfo(business) {
 	$('#photoSet').empty();
-	
+
 	$('#name').text(business.name);
 	$('#phone').text('Phone: '+ business.formatted_phone_number);
 	$('#address').text('Address: ' + business.formatted_address);
@@ -90,7 +90,6 @@ function tagImage(url) {
 	app.models.predict(Clarifai.GENERAL_MODEL, url).then(
 	  function(response) {
 	  	const list = $('#photoSet').append("<ul></ul>");
-	  	list.css('display', 'inline-block')
 	  	for(var i=0; i < 3; i++) {
 	  		const tag = response.outputs[0].data.concepts[i].name;
 	  		list.append('<li>' + tag + '</li>')
