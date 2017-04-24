@@ -17,8 +17,22 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 
 #map {
 	height: 400px;
+	width: 50%;
 }
 
 #photoSet {
 	height: 200px;
+}
+
+body {
+	width: 100%;
+	padding: 15px;
+}
+
+#error {
+	color: red;
+}
+
+ul {
+	list-style: none;
 }

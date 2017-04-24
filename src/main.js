@@ -28,9 +28,10 @@ function loadMap() {
   const searchParams = business + ' ' + zip;
 
 	if(validateSearch(business, zip)) {
+		$('#error').text('');
 		$('#searchForm :input').val('');;
     const mapOptions = {
-        zoom: 14,
+        zoom: 12,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -55,7 +56,7 @@ function loadMap() {
 
     });
 	} else {
-		alert("Please enter a valid business name and zipcode")
+		$('#error').text('Please enter a valid zipcode and business name.')
 	}
 }
 
