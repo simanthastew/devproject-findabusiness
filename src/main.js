@@ -1,6 +1,8 @@
 // CSS
 require('./main.scss')
 const $ = require('jquery')
+const Clarifai = require('clarifai');
+
 
 $( document ).ready(function() {
 	console.log('b')
@@ -49,7 +51,6 @@ function loadMap() {
         service.getDetails({
       		placeId: results[0].place_id
     		}, function(results) {
-    			console.log(results)
       		appendInfo(results)
     		});
 
@@ -69,11 +70,28 @@ function appendInfo(business) {
 	if(business.photos.length > 0) {
 		for(var i = 0; i < 5; i++) {
 			const photo = business.photos[i].getUrl({'maxWidth': 100, 'maxHeight': 100});
+			tagImage(photo)
 			const img = $('<img>');
 			img.attr('src', photo);
 			img.appendTo($('#photoSet'))
 		}
 	}
+}
+
+function tagImage(url) {
+	const app = new Clarifai.App(
+		'NO18sIhXk9nZDkAdVXNPSThzPXPI8wHn78vAncxe',
+		'c2vHENnTnNj6XdFkXCEWbG1g1oSdBmTqOTO44eP9'
+	);
+
+	app.models.predict(Clarifai.GENERAL_MODEL, url).then(
+  function(response) {
+    console.log(response);
+  },
+  function(err) {
+    console.error(err);
+  }
+)
 }
 		
 
